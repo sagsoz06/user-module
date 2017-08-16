@@ -7,6 +7,7 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Entities\Sentinel\User;
 use Modules\User\Events\UserHasRegistered;
+use Modules\User\Events\UserIsCreating;
 use Modules\User\Events\UserIsUpdating;
 use Modules\User\Events\UserWasCreated;
 use Modules\User\Events\UserWasUpdated;
@@ -48,7 +49,9 @@ class SentinelUserRepository implements UserRepository
     public function create(array $data, $activated = false)
     {
         $this->hashPassword($data);
-        $user = $this->user->create((array) $data);
+
+        event($event = new UserIsCreating($data));
+        $user = $this->user->create($event->getAttributes());
 
         if ($activated) {
             $this->activateUser($user);
@@ -70,7 +73,6 @@ class SentinelUserRepository implements UserRepository
      */
     public function createWithRoles($data, $roles, $activated = false)
     {
-        $this->hashPassword($data);
         $user = $this->create((array) $data, $activated);
 
         if (!empty($roles)) {
@@ -124,9 +126,8 @@ class SentinelUserRepository implements UserRepository
     {
         $this->checkForNewPassword($data);
 
-        $user->fill($data);
-
-        event(new UserIsUpdating($user));
+        event($event = new UserIsUpdating($user, $data));
+        $user->fill($event->getAttributes());
 
         $user->save();
 
@@ -150,9 +151,9 @@ class SentinelUserRepository implements UserRepository
 
         $this->checkForManualActivation($user, $data);
 
-        $user = $user->fill($data);
+        event($event = new UserIsUpdating($user, $data));
 
-        event(new UserIsUpdating($user));
+        $user = $user->fill($event->getAttributes());
 
         $user->save();
 
