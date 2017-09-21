@@ -38,6 +38,9 @@ class SentinelGroupSeedTableSeeder extends Seeder
         // Save the permissions
         $group = Sentinel::findRoleBySlug('admin');
         $group->permissions = [
+            /* Core */
+            'core.sidebar.group'                      => true,
+            /* Dashboard */
             'dashboard.index'                         => true,
             'dashboard.update'                        => true,
             'dashboard.reset'                         => true,
