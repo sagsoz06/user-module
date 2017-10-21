@@ -10,6 +10,7 @@ use Modules\User\Http\Requests\LoginRequest;
 use Modules\User\Http\Requests\RegisterRequest;
 use Modules\User\Http\Requests\ResetCompleteRequest;
 use Modules\User\Http\Requests\ResetRequest;
+use Modules\User\Repositories\UserTokenRepository;
 use Modules\User\Services\UserRegistration;
 use Modules\User\Services\UserResetter;
 
@@ -68,6 +69,7 @@ class AuthController extends BasePublicController
     public function getActivate($userId, $code)
     {
         if ($this->auth->activate($userId, $code)) {
+            app(UserTokenRepository::class)->generateFor($userId);
             return redirect()->route('login')
                 ->withSuccess(trans('user::messages.account activated you can now login'));
         }
