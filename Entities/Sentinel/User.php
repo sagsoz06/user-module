@@ -140,11 +140,6 @@ class User extends EloquentUser implements UserInterface, AuthenticatableContrac
         return $this->getAttribute('first_name') . ' ' . $this->getAttribute('last_name');
     }
 
-    public function blogPosts()
-    {
-        return $this->hasMany(Post::class)->with('translations');
-    }
-
     public static function boot()
     {
         parent::boot();
