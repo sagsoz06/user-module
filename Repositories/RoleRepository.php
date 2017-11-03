@@ -47,5 +47,5 @@ interface RoleRepository
      * @param  string $name
      * @return mixed
      */
-    public function findByName($name);
+    public function findBySlug($name);
 }

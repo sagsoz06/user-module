@@ -55,7 +55,7 @@ class UserRegistration
 
     private function assignUserToUsersGroup($user)
     {
-        $role = $this->role->findByName(config('asgard.user.config.default_role', 'User'));
+        $role = $this->role->findBySlug(config('asgard.user.config.default_role', 'user'));
 
         $this->auth->assignRole($user, $role);
     }
