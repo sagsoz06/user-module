@@ -31,7 +31,6 @@ class EloquentUserTokenRepository extends EloquentBaseRepository implements User
         } catch (QueryException $e) {
             $this->generateFor($userId);
         }
-
         return $userToken;
     }
 }

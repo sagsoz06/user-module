@@ -67,7 +67,7 @@ class Sentinel implements LaravelGuard
      */
     public function setUser(Authenticatable $user)
     {
-        SentinelFacade::login($user);
+        return SentinelFacade::login($user);
     }
 
     /**
@@ -77,11 +77,34 @@ class Sentinel implements LaravelGuard
      */
     public function login(Authenticatable $user)
     {
-        $this->setUser($user);
+        return $this->setUser($user);
     }
 
+    /**
+     * @param array $credentials
+     * @param bool $remember
+     * @return bool
+     */
     public function attempt(array $credentials, $remember = false)
     {
         return SentinelFacade::authenticate($credentials, $remember);
+    }
+
+    /**
+     * @return bool
+     */
+    public function logout()
+    {
+        return SentinelFacade::logout();
+    }
+
+    /**
+     * @param int $userId
+     * @return bool
+     */
+    public function loginUsingId($userId)
+    {
+        $user = app(\Modules\User\Repositories\UserRepository::class)->find($userId);
+        return $this->login($user);
     }
 }

@@ -22,7 +22,7 @@ class SentinelGroupSeedTableSeeder extends Seeder
         // Create an Admin group
         $groups->createModel()->create(
             [
-                'name' => 'Admin',
+                'name' => 'Yönetici',
                 'slug' => 'admin',
             ]
         );
@@ -30,7 +30,7 @@ class SentinelGroupSeedTableSeeder extends Seeder
         // Create an Users group
         $groups->createModel()->create(
             [
-                'name' => 'User',
+                'name' => 'Üye',
                 'slug' => 'user',
             ]
         );

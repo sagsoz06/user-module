@@ -63,7 +63,7 @@ class AuthController extends BasePublicController
     {
         $this->auth->logout();
 
-        return redirect()->route('login');
+        return redirect()->back();
     }
 
     public function getActivate($userId, $code)

@@ -64,7 +64,6 @@ class UserServiceProvider extends ServiceProvider
         $this->app->register($this->getUserPackageServiceProvider());
 
         $this->registerBindings();
-        $this->registerFacade();
 
         \Validator::extend('old_password', function ($attribute, $value, $parameters, $validator) {
             return \Hash::check($value, current($parameters));
@@ -153,11 +152,5 @@ class UserServiceProvider extends ServiceProvider
         }
 
         return $this->providers[$driver];
-    }
-
-    private function registerFacade()
-    {
-        $aliasLoader = AliasLoader::getInstance();
-        $aliasLoader->alias('Authentication', UserFacade::class);
     }
 }
