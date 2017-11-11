@@ -14,10 +14,11 @@ class RegisterRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:3',
-            'first_name' => 'required|min:2|max:50',
-            'last_name'  => 'required|min:2|max:50',
+            'email'                => 'required|email|unique:users',
+            'password'             => 'required|confirmed|min:3',
+            'first_name'           => 'required|min:2|max:50',
+            'last_name'            => 'required|min:2|max:50',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 

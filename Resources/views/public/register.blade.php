@@ -28,6 +28,10 @@
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
             </div>
+        <div class="form-group{{ $errors->has('captcha_user') ? ' has-error' : '' }}">
+            {!! Captcha::display() !!}
+            {!! $errors->first('g-recaptcha-response', '<span class="help-block">:message</span>') !!}
+        </div>
             <div class="row">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('user::auth.register me') }}</button>
@@ -38,3 +42,7 @@
         <a href="{{ route('login') }}" class="text-center">{{ trans('user::auth.I already have a membership') }}</a>
     </div>
 @stop
+
+@push('js_inline')
+{!! Captcha::setLang(locale())->script() !!}
+@endpush
